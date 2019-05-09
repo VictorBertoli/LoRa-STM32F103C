@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <LoRa.h>
 
+//o código original era destinado ao STM32 Maple Mini, e originalmente, era para Duplex Callback
+
 #define BAND 433E6 //Frequência do radio - exemplo : 433E6, 868E6, 915E6
 #define SCK PB3   //para o maple: 5   GPIO5  SCK
 #define MISO PB4 //para o maple: 19 - GPIO19 MISO
@@ -10,7 +12,6 @@
 #define DI00 PA11 //GPIO26 IRQ( Interrupt Request) -opcional-
 #define INTERVAL 500 //Intervalo entre os envios
 
-//Constante para informar ao Slave que queremos os dados
 const String GETDATA = "getdata";
 
 //Tempo do último envio
@@ -20,26 +21,29 @@ void setup(){
   Serial.begin(9600);
   while (!Serial);
   
-  //Chama a configuração inicial do LoRa
+  //Configuração inicial do LoRa
   setupLoRa();
 }
 
 void loop(){
   //Se passou o tempo definido em INTERVAL desde o último envio
   if (millis() - lastSendTime > INTERVAL){
-    //Marcamos o tempo que ocorreu o último envio
+    //Marca o tempo do último envio
     lastSendTime = millis();
-    //Envia o pacote para informar ao Slave que queremos receber os dados
+    //Envia os dados
     sender();
   }
 }
 
-//Configurações iniciais do LoRa
+//Função das configurações iniciais do LoRa
 void setupLoRa(){ 
-  //Inicializa a comunicação
-  SPI.begin(SCK, MISO, MOSI, SS);
+  //Inicializa a comunicação:
+ 
+  //A linha a seguir está com o seguinte problema: No matching function for call to 'SPIClass::begin(<anonymous enum>, <anonymous enum>, <anonymous enum>, <anonymous enum>)
+  SPI.begin(SCK, MISO, MOSI, SS);     //no programa original há estes parâmetros, porem na biblioteca SPI begin é void
   LoRa.setPins(SS, RST, DI00);
-  //Inicializa o LoRa
+  
+  //Inicializa o LoRa ()
   if (!LoRa.begin(BAND)){
    Serial.println("Starting LoRa failed!");
     while (1);
