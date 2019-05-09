@@ -45,7 +45,7 @@ void setupLoRa(){
   
   //Inicializa o LoRa ()
   if (!LoRa.begin(BAND)){
-   Serial.println("Starting LoRa failed!");
+   Serial.println("Starting LoRa failed!");     //caso a linha 43 seja comentada, o programa compila porém entra neste IF
     while (1);
   }
 
