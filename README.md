@@ -1,2 +1,2 @@
-# LoRa-STM32F103C
-Simplex call (sender)
+# LoRa -> STM32F103C
+Simplex Communication
