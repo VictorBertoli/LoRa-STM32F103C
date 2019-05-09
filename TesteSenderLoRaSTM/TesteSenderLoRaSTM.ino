@@ -3,7 +3,7 @@
 
 //o código original era destinado ao STM32 Maple Mini, e originalmente, era para Duplex Callback
 
-#define BAND 433E6 //Frequência do radio - exemplo : 433E6, 868E6, 915E6
+#define BAND 915E6 //Frequência do radio - exemplo : 433E6, 868E6, 915E6
 #define SCK PB3   //para o maple: 5   GPIO5  SCK
 #define MISO PB4 //para o maple: 19 - GPIO19 MISO
 #define MOSI PB5 //para o maple: 27 - GPIO27 MOSI
